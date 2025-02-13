@@ -27,18 +27,15 @@ def lint(session: nox.Session) -> None:
 @nox.session
 @nox.parametrize(
     "group",
-    ["census", "validator", "docs"],
+    ["validator", "docs"],
 )
 def install(session: nox.Session, group: str) -> None:
     extras = ""
-    if group == "census":
-        extras = "bionty,jupyter"
-        run(session, "uv pip install --system tiledbsoma==1.15.0rc3")
-    elif group == "validator":
+    if group == "validator":
         extras = "bionty,jupyter,zarr"
         run(session, "uv pip install --system tiledbsoma==1.15.0rc3")
         run(session, "uv tool install cellxgene-schema==5.2.2")
-    install_lamindb(session, branch="main", extras=extras)
+    install_lamindb(session, branch="curators", extras=extras)
     run(session, "uv pip install --system .[dev]")
 
 
